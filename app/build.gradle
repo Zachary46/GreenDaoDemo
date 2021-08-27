@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.application'
+}
+apply plugin: 'org.greenrobot.greendao'
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        applicationId "cn.zachary.greendaodemo"
+        minSdkVersion 16
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    greendao {
+        schemaVersion 1 //当前数据库版本(表添加、删除、修改字段名啥的都要新增版本号)
+        targetGenDir './src/main/java'
+        daoPackage 'cn.zachary.greendaodemo.database.greendao'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    api 'org.greenrobot:greendao:3.3.0'
+    api 'net.zetetic:android-database-sqlcipher:3.5.4'//数据库加密依赖库，用到加密没有导入会报错
+}
